@@ -16,5 +16,24 @@ function NhanVien(
   this.luongCB = _luongCB;
   this.chucvu = _chucvu;
   this.gioLam = _gioLam;
-  this.xepLoai;
+  this.tinhTongLuong = function () {
+    if (this.chucvu === "Sếp") {
+      this.tongLuong = this.luongCB * 3;
+    } else if (this.chucvu === "Trưởng phòng") {
+      this.tongLuong = this.luongCB * 2;
+    } else {
+      this.tongLuong = this.luongCB;
+    }
+  };
+  this.tinhXepLoai = function () {
+    if (this.gioLam < 160) {
+      this.xepLoai = "Trung bình";
+    } else if (160 <= this.gioLam && this.gioLam < 176) {
+      this.xepLoai = "Khá";
+    } else if (176 <= this.gioLam && this.gioLam < 192) {
+      this.xepLoai = "Giỏi";
+    } else {
+      this.xepLoai = "Xuất xắc";
+    }
+  };
 }

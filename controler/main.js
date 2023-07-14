@@ -9,9 +9,9 @@ function layThongTinNV() {
   var email = getEle("email").value;
   var password = getEle("password").value;
   var ngayLam = getEle("datepicker").value;
-  var luongCB = getEle("luongCB").value;
+  var luongCB = Number(getEle("luongCB").value);
   var chucvu = getEle("chucvu").value;
-  var gioLam = getEle("gioLam").value;
+  var gioLam = Number(getEle("gioLam").value);
 
   var nv = new NhanVien(
     tknv,
@@ -23,6 +23,8 @@ function layThongTinNV() {
     chucvu,
     gioLam
   );
+  nv.tinhTongLuong();
+  nv.tinhXepLoai();
   return nv;
 }
 
@@ -36,11 +38,10 @@ function renderTable(data) {
             <td>${nv.tknv}</td>
             <td>${nv.tenSV}</td>
             <td>${nv.email}</td>
-            <td>${nv.password}</td>
             <td>${nv.ngayLam}</td>
-            <td>${nv.luongCB}</td>
             <td>${nv.chucvu}</td>
-            <td>${nv.gioLam}</td>
+            <td>${nv.tongLuong}</td>
+            <td>${nv.xepLoai}</td>
         </tr>
         `;
     getEle("tableDanhSach").innerHTML = content;
