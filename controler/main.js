@@ -1,12 +1,12 @@
 var dsnv = new DSNV();
-
 var validation = new Validation();
+getLocalStorage();
 
 function getEle(id) {
   return document.getElementById(id);
 }
 
-function layThongTinNV() {
+function layThongTinNV(isAdd) {
   var tknv = getEle("tknv").value;
   var tenNV = getEle("name").value;
   var email = getEle("email").value;
@@ -17,15 +17,27 @@ function layThongTinNV() {
   var gioLam = getEle("gioLam").value;
 
   var isValid = true;
-  isValid &=
-    validation.kiemTraRong(tknv, "tbTKNV", "(*) Vui lòng nhập mã nhân viên") &&
-    validation.kiemTraDoDaiKiTu(
-      tknv,
-      "tbTKNV",
-      "(*) Vui lòng nhập tài khoản từ 4 - 6",
-      4,
-      6
-    );
+  if (isAdd) {
+    isValid &=
+      validation.kiemTraRong(
+        tknv,
+        "tbTKNV",
+        "(*) Vui lòng nhập mã nhân viên"
+      ) &&
+      validation.kiemTraDoDaiKiTu(
+        tknv,
+        "tbTKNV",
+        "(*) Vui lòng nhập tài khoản từ 4 - 6",
+        4,
+        6
+      ) &&
+      validation.kiemTraMaNVTonTai(
+        tknv,
+        "tbTKNV",
+        "(*) Mã nhân viên đã tồn tại",
+        dsnv.arr
+      );
+  }
   isValid &=
     validation.kiemTraRong(tenNV, "tbTen", "(*) Vui lòng nhập tên nhân viên") &&
     validation.checkPattern(
@@ -128,6 +140,10 @@ function renderTable(data) {
             <td>${nv.chucVu}</td>
             <td>${nv.tongLuong}</td>
             <td>${nv.xepLoai}</td>
+            <td>
+            <button class='btn btn-success' onclick = "suaNV('${nv.tknv}')">Sua</button>
+            <button class = 'btn btn-danger' onclick = "xoaNV('${nv.tknv}')"> Xoa </button>
+            </td>
         </tr>
         `;
     getEle("tableDanhSach").innerHTML = content;
@@ -140,5 +156,46 @@ function themNhanVien() {
   if (nv) {
     dsnv.themNV(nv);
     renderTable(dsnv.arr);
+    setLocalStorage();
   }
+}
+function xoaNV(tknv) {
+  dsnv._xoaNV(tknv);
+  renderTable(dsnv.arr);
+  setLocalStorage();
+}
+function suaNV(tknv) {
+  var nv = dsnv.layThongTinChiTietNV(tknv);
+  if (nv) {
+    getEle("tknv").value = nv.tknv;
+    getEle("name").value = nv.tenNV;
+    getEle("email").value = nv.email;
+    getEle("password").value = nv.password;
+    getEle("datepicker").value = nv.ngayLam;
+    getEle("luongCB").value = nv.luongCB;
+    getEle("chucvu").value = nv.chucVu;
+    getEle("gioLam").value = nv.gioLam;
+  }
+}
+function capNhatNV() {
+  var nv = layThongTinNV(false);
+  if (nv) {
+    dsnv._capNhat(nv);
+    renderTable(dsnv.arr);
+    setLocalStorage();
+  }
+}
+
+function getLocalStorage() {
+  if (localStorage.getItem("DSNV")) {
+    var dataString = localStorage.getItem("DSNV");
+    var dataJson = JSON.parse(dataString);
+    dsnv.arr = dataJson;
+    renderTable(dsnv.arr);
+  }
+}
+
+function setLocalStorage() {
+  var dataString = JSON.stringify(dsnv.arr);
+  localStorage.setItem("DSNV", dataString);
 }

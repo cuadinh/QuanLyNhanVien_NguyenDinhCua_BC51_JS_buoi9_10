@@ -50,4 +50,21 @@ function Validation() {
 
     return false;
   };
+  this.kiemTraMaNVTonTai = function (value, errorID, mess, listNV) {
+    var isExist = false;
+    for (var i = 0; i < listNV.length; i++) {
+      var nv = listNV[i];
+      if (value === nv.tknv) {
+        isExist = true;
+        break;
+      }
+    }
+    if (isExist) {
+      getEle(errorID).innerHTML = mess;
+      getEle(errorID).style.display = "block";
+      return false;
+    }
+    getEle(errorID).style.display = "none";
+    return true;
+  };
 }
