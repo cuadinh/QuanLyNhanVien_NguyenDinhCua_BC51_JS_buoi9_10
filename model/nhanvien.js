@@ -1,25 +1,25 @@
 function NhanVien(
   _tknv,
-  _tenSV,
+  _tenNV,
   _email,
   _password,
   _ngayLam,
   _luongCB,
-  _chucvu,
+  _chucVu,
   _gioLam
 ) {
   this.tknv = _tknv;
-  this.tenSV = _tenSV;
+  this.tenNV = _tenNV;
   this.email = _email;
   this.password = _password;
   this.ngayLam = _ngayLam;
   this.luongCB = _luongCB;
-  this.chucvu = _chucvu;
+  this.chucVu = _chucVu;
   this.gioLam = _gioLam;
   this.tinhTongLuong = function () {
-    if (this.chucvu === "Sếp") {
+    if (this.chucVu === "Sếp") {
       this.tongLuong = this.luongCB * 3;
-    } else if (this.chucvu === "Trưởng phòng") {
+    } else if (this.chucVu === "Trưởng phòng") {
       this.tongLuong = this.luongCB * 2;
     } else {
       this.tongLuong = this.luongCB;
