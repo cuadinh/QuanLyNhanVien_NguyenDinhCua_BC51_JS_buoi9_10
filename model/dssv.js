@@ -33,4 +33,21 @@ function DSNV() {
       this.arr[index] = nv;
     }
   };
+  this.timKiemNV = function (keyword) {
+    var mangTimKiem = [];
+    for (var i = 0; i < this.arr.length; i++) {
+      var nv = this.arr[i];
+      console.log(nv);
+      var keywordLowerCase = keyword.toLowerCase();
+      // console.log(keywordLowerCase);
+
+      var xepLoaiLowerCase = nv.xepLoai.toLowerCase();
+      // console.log(xepLoaiLowerCase);
+
+      if (xepLoaiLowerCase.indexOf(keywordLowerCase) !== -1) {
+        mangTimKiem.push(nv);
+      }
+    }
+    return mangTimKiem;
+  };
 }

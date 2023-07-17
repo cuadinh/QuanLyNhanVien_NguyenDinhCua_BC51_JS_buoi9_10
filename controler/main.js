@@ -186,6 +186,14 @@ function capNhatNV() {
   }
 }
 
+// tim kiem nhan vien
+function searchNV() {
+  var txtSearch = getEle("searchName").value;
+  var mangTimKiem = dsnv.timKiemNV(txtSearch);
+  renderTable(mangTimKiem);
+}
+getEle("searchName").addEventListener("keyup", searchNV);
+
 function getLocalStorage() {
   if (localStorage.getItem("DSNV")) {
     var dataString = localStorage.getItem("DSNV");
